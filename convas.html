@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js">
+    </script>
+    <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js">
+    </script>
+    <!--載入jqueryui主要作用是使用其拖拽的功能-->
+    <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js">
+    </script>
+    <!--想要圖片合成，核心就是載入使用這個外掛-->
+    <script>
+        function BaseImage(imgFile) {//圖片1上傳的函式方法 
+            var f = imgFile.files[0];//獲取上傳的圖片檔案 
+            var filereader = new FileReader();//新建一個圖片物件 
+            filereader.onload = function (event) {//圖片載入完成後執行的函式 
+                var srcpath = event.target.result;//這裡獲取圖片的路徑（圖片會被轉為base6格式） 
+                $("#baseimg").attr("src", srcpath);//將獲取的圖片使用jquery的attr()方法插入到id為baseimg的圖片元素裡 
+            };
+            filereader.readAsDataURL(f);//讀取圖片（將插入的圖片讀取顯示出來） 
+        }
+
+        function StyleImage(imgFile) {//圖片2上傳的函式方法（原理同上） 
+            var f = imgFile.files[0];
+            var filereader = new FileReader();
+            filereader.onload = function (event) {
+                var srcpath = event.target.result;
+                $("#styleimg").attr("src", srcpath);
+            };
+            filereader.readAsDataURL(f);
+        }
+        function StyleImages(imgFile) {//圖片2上傳的函式方法（原理同上） 
+            var f = imgFile.files[0];
+            var filereader = new FileReader();
+            filereader.onload = function (event) {
+                var srcpath = event.target.result;
+                $("#styleimgs").attr("src", srcpath);
+            };
+            filereader.readAsDataURL(f);
+        }
+
+        $(function () {
+            $(".drg").draggable();//這裡使用jqueryui的拖拽方法draggable()；作用是可以讓圖片2進行拖拽 
+        });
+
+        function down() {//這個函式是點選下載執行的方法 
+            html2canvas($(".whole"), {//這是使用了html2canvas這個外掛的方法，將class為whole的整個節點繪製成畫布 
+                onrendered: function (canvas) {//畫布繪製完成後執行下面內容，function內的canvas這個引數就是已經被繪製成畫布 
+                    var link = document.createElement('a');//建立一個a標籤 
+                    link.download = 'my-image-name.jpg';//a標籤增加一個download屬性，屬性值（my-image-name.jpg）就是合成下載後的檔名 
+                    link.href = canvas.toDataURL();//canvas.toDataURL()就是畫布的路徑，將路徑賦給a標籤的href 
+                    link.click();//模擬a標籤被點選，這樣就可以下載了 
+                },
+            })
+        } 
+    </script>
+</head>
+
+<body>
+    <fieldset>
+        <input type="file" onchange="BaseImage(this)">
+        <legend>上傳圖1</legend>
+    </fieldset>
+    <fieldset>
+        <input type="file" onchange="StyleImage(this)">
+        <legend>上傳圖2</legend>
+    </fieldset>
+    <fieldset>
+        <input type="file" onchange="StyleImages(this)">
+        <legend>上傳圖3</legend>
+    </fieldset>
+    <fieldset>
+        <button onclick="down()">點選合成下載</button>
+    </fieldset>
+
+    <span class="whole" style="width:544px;display:inline-block;position:relative;">
+        <img id="baseimg" style="width:100%;height:auto;">
+        <div style="height:100%;width:100%;top:0;position:absolute;overflow:hidden;">
+            <div class="drg" style="position:absolute;width:100px;top:0px;left:0px;display:inline-block;">
+                <img id="styleimg" style="width:100%;cursor:pointer;">
+            </div>
+            <div class="drg" style="position:absolute;width:100px;top:0px;left:0px;display:inline-block;">
+                <img id="styleimgs" style="width:100%;cursor:pointer;">
+            </div>
+        </div>
+    </span>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
