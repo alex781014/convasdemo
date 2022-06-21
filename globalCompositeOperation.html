@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+</head>
+
+<body>
+    <img class="d-none" src="./images/v_leafy_cabbage.png" id="btn1" alt="">
+    <div class="container">
+        <div class="pho-bg row">
+            <div class="col-3">
+                <img src="./images/F-durian.png" class="w-100 man man-1" id="man-1" alt="">
+            </div>
+            <div class="col-3">
+                <img src="./images/F-apple.jpg" class="w-100 man man-2" id="man-2" alt="">
+            </div>
+            <div class="col-3">
+                <img src="./images/F-banana.jpg" class="w-100 man man-3" id="man-3" alt="">
+            </div>
+            <div class="col-3">
+                <img src="./images/F-blueberry.jpg" class="w-100 man man-4" id="man-4" alt="">
+            </div>
+            <a href="javascript:;" class="btn" title=""> 按我</a>
+            <!-- <img src="./images/F-cantaloupe.webp" class="sen1" id="sen1" alt=""> -->
+            <!-- <img id="show-pic" alt=""> -->
+        </div>
+    </div>
+
+    <div class="photo"></div>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+    <img class="d-none" src="./images/images.jpg" id="bg1" alt="">
+
+
+
+    <script src="./js/jquery-3.6.0.js"></script>
+    <script>
+        $('.btn').click(function () {
+            // $('.pho-bg').hide();
+            // $('#myCanvas').show();
+            var man1 = document.getElementById("man-1"), //榴槤
+                man2 = document.getElementById("man-2"), //蘋果
+                man3 = document.getElementById("man-3"), //香蕉
+                man4 = document.getElementById("man-4"), //藍莓
+                sen1 = document.getElementById("sen1"),
+                btn1 = document.getElementById("btn1"),
+                canvasBg = document.getElementById("bg1");
+
+
+            var canvas = document.getElementById("myCanvas");
+            ctx = canvas.getContext("2d");
+            canvas.width = 500;
+            canvas.height = 500;
+            // 制作背景图
+            var patBg = ctx.createPattern(canvasBg, "no-repeat");
+            ctx.rect(0, 0, 500, 500);
+            ctx.fillStyle = patBg;
+            ctx.fill();
+            // 将man1,man2,man3,man4,sen1,btn加入画布
+            ctx.drawImage(btn1, 130, 100, 250, 250);
+
+            ctx.drawImage(man1, 100, 100, 100, 100);
+            ctx.drawImage(man2, 350, 100, 100, 100);
+            ctx.drawImage(man3, 300, 300, 100, 100);
+            ctx.drawImage(man4, 150, 300, 100, 100);
+
+            // ctx.drawImage(sen1, 40, 950, 669, 109);
+            ctx.globalCompositeOperation = "destination-over"
+            var newImg = new Image();
+            newImg.src = canvas.toDataURL("image/png");
+
+            // $('.photo').append(newImg);
+
+        });
+    </script>
+</body>
+
+</html>
