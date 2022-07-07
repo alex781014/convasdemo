@@ -251,6 +251,7 @@
         let str = "";
         function showcard(event) {
             drawSeq.push(myimgs[event.currentTarget.id])
+            console.log(drawSeq)
             drawSeq.forEach((i, index) => {
                 ctx.drawImage(i, rageX[index], rageY[index], foodWeight[index], foodHeight[index]);
 
@@ -270,15 +271,17 @@
                             <img src="${img}" class="man" alt="">
                             <p class="me-2 mb-0">${pName}</p>
                             <span>價格:${pPrice}</span>
-                            <i class="fa-solid fa-trash" onclick="delete_it(event)"></i>
+                            <i class="fa-solid fa-trash" id="btn1" onclick="delete_it(event)" data-pName="高麗菜" data-pPrice="30"></i>
                         </div>
                     `
             detilArea.innerHTML += str;
         }
         function delete_it(event) {
-            const currentProduct = event.target.getAttribute('data-pName');
+            const currentProduct = event.target.id;
+            console.log(currentProduct)
             const delprice = parseInt(event.target.getAttribute('data-pPrice'))
             drawSeq = drawSeq.filter(i => i !== currentProduct);
+
             // totalPrice = totalPrice.filter(i => i !== delprice)
 
             const de = event.target.closest(".foodModArea");
