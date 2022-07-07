@@ -15,18 +15,23 @@
     <div class="container">
         <div class="pho-bg row">
             <div class="col-3">
-                <img src="./images/F-durian.png" class="w-100 man man-1" id="man-1" alt="">
+                <img src="./images/F-durian.png" onclick="showcard(event)" class="w-100 man man-1" id="man_1" alt=""
+                    data-img="./images/F-durian.png">
             </div>
             <div class="col-3">
-                <img src="./images/F-apple.jpg" class="w-100 man man-2" id="man-2" alt="">
+                <img src="./images/F-apple.jpg" onclick="showcard(event)" class="w-100 man man-2" id="man_2" alt=""
+                    data-img="./images/F-apple.jpg">
             </div>
             <div class="col-3">
-                <img src="./images/F-banana.jpg" class="w-100 man man-3" id="man-3" alt="">
+                <img src="./images/F-banana.jpg" onclick="showcard(event)" class="w-100 man man-3" id="man_3" alt=""
+                    data-img="./images/F-banana.jpg">
             </div>
             <div class="col-3">
-                <img src="./images/F-blueberry.jpg" class="w-100 man man-4" id="man-4" alt="">
+                <img src="./images/F-blueberry.jpg" onclick="showcard(event)" class="w-100 man man-4" id="man_4" alt=""
+                    data-img="./images/F-blueberry.jpg">
             </div>
-            <img class="col-3" src="./images/v_leafy_cabbage.png" id="btn1" alt="">
+            <img class="col-3 man" src="./images/v_leafy_cabbage.png" id="btn1" alt=""
+                data-img="./images/v_leafy_cabbage.png">
             <!-- <img src="./images/F-cantaloupe.webp" class="sen1" id="sen1" alt=""> -->
             <!-- <img id="show-pic" alt=""> -->
         </div>
@@ -41,51 +46,106 @@
 
     <script src="./js/jquery-3.6.0.js"></script>
     <script>
-        let man1 = document.getElementById("man-1"), //榴槤
-            man2 = document.getElementById("man-2"), //蘋果
-            man3 = document.getElementById("man-3"), //香蕉
-            man4 = document.getElementById("man-4"), //藍莓
+        let man_1 = document.getElementById("man_1"), //榴槤
+            man_2 = document.getElementById("man_2"), //蘋果
+            man_3 = document.getElementById("man_3"), //香蕉
+            man_4 = document.getElementById("man_4"), //藍莓
             sen1 = document.getElementById("sen1"),
             btn1 = document.getElementById("btn1"),
             canvasBg = document.getElementById("bg1");
         let canvas = document.getElementById("myCanvas")
         let ctx = canvas.getContext("2d");
         let patBg = ctx.createPattern(canvasBg, "no-repeat");
+        const myimgs = { man_1, man_2, man_3, man_4 }
+
+        let drawSeq = [];
+
+
+        // for (let i = 0; i < imgs.length; i++) {
+        //     // console.log(imgs[i])
+
+        //     // console.log(imgs[i].dataset.img)
+        //     imgsArray.push(imgs[i].dataset.img)
+        //     console.log(imgsArray)
+        // }
+        // console.log(imgsArray)
+
+
+        // const cimg = imgs[1].getAttribute("data-img");
+
 
         var newImg = new Image();
+
+        function showcard(event) {
+            drawSeq.push(myimgs[event.currentTarget.id])
+            console.log(drawSeq)
+
+            ctx.drawImage(drawSeq[0], 100, 100, 100, 100);
+            ctx.drawImage(drawSeq[1], 350, 100, 100, 100);
+            ctx.drawImage(drawSeq[2], 300, 300, 100, 100);
+            ctx.drawImage(drawSeq[3], 150, 300, 100, 100);
+        }
+
+        // let imageArray = [];
+        // gShape = new createjs.Shape();
+        // // shape is something
+        // imageArray.push(gShape); // Dumped all the objects
+
+        // for (let i = 0; i < imageArray.length; i++) {
+        //     imageArray[i].addEventListener("click", function () {
+        //         console.log("you clicked region number " + i);
+        //     });
+        // }
+
 
 
         $('#btn1').click(function () {
             // 将man1,man2,man3,man4,sen1,btn加入画布
+
             ctx.drawImage(btn1, 130, 100, 250, 250);
 
-            newImg.src = canvas.toDataURL("image/png");
+            // newImg.src = canvas.toDataURL("image/png");
         })
-        $('#man-1').click(function () {
-            // 将man1,man2,man3,man4,sen1,btn加入画布
-            ctx.drawImage(man1, 100, 100, 100, 100);
 
-            newImg.src = canvas.toDataURL("image/png");
-        })
-        $('#man-2').click(function () {
-            // 将man1,man2,man3,man4,sen1,btn加入画布
+        // $('.man').on("click", event => {
+        //     console.log(event.currentTarget.id);
+        //     console.log(myimgs[event.currentTarget.id]) //const myimgs = { man_1, man_2, man_3, man_4 }
+        //     ctx.drawImage(myimgs[event.currentTarget.id], 100, 100, 100, 100);
+        // })
+        // $('.man').on("click", event => {
+        //     console.log(event.currentTarget.id);
+        //     console.log(myimgs[event.currentTarget.id]) //const myimgs = { man_1, man_2, man_3, man_4 }
+        //     ctx.drawImage(myimgs[event.currentTarget.id], 350, 100, 100, 100);
+        // })
+        // $('.man').click(event => {
+        //     // console.log(cimg)
+        //     // 将man1,man2,man3,man4,sen1,btn加入画布
+        //     ctx.drawImage(myimgs[event.currentTarget.id], 100, 100, 100, 100);
 
-            ctx.drawImage(man2, 350, 100, 100, 100);
+        //     newImg.src = canvas.toDataURL("image/png");
+        // })
+        // $('.man').click(event => {
+        //     // 将man1,man2,man3,man4,sen1,btn加入画布
+        //     // console.log(cimg)
 
-            newImg.src = canvas.toDataURL("image/png");
-        })
-        $('#man-3').click(function () {
-            // 将man1,man2,man3,man4,sen1,btn加入画布
+        //     ctx.drawImage(myimgs[event.currentTarget.id], 350, 100, 100, 100);
 
-            ctx.drawImage(man3, 300, 300, 100, 100);
+        //     newImg.src = canvas.toDataURL("image/png");
+        // })
+        // $('.man').click(event => {
+        //     // 将man1,man2,man3,man4,sen1,btn加入画布
+        //     // console.log(cimg)
 
-            newImg.src = canvas.toDataURL("image/png");
-        })
-        $('#man-4').click(function () {
-            // 将man1,man2,man3,man4,sen1,btn加入画布
-            ctx.drawImage(man4, 150, 300, 100, 100);
-            newImg.src = canvas.toDataURL("image/png");
-        })
+        //     ctx.drawImage(myimgs[event.currentTarget.id], 300, 300, 100, 100);
+
+        //     newImg.src = canvas.toDataURL("image/png");
+        // })
+        // $('.man').click(() => {
+        //     // console.log(cimg)
+        //     // 将man1,man2,man3,man4,sen1,btn加入画布
+        //     ctx.drawImage(myimgs[event.currentTarget.id], 150, 300, 100, 100);
+        //     newImg.src = canvas.toDataURL("image/png");
+        // })
 
         function draw() {
             canvas.width = 500;
