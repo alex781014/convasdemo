@@ -32,7 +32,7 @@
         }
 
         .chooseArea {
-            height: 45vh;
+            height: 51vh;
         }
     </style>
     <script>
@@ -239,7 +239,7 @@
             ctx.fillStyle = patBg;
             ctx.fill();
         }
-        drawbg()
+        newImg.addEventListener("onload", drawbg());
 
         const rageX = [130, 100, 350, 300, 150]
         const rageY = [130, 100, 100, 300, 300]
@@ -251,7 +251,6 @@
         let str = "";
         function showcard(event) {
             drawSeq.push(myimgs[event.currentTarget.id])
-            console.log(drawSeq)
             drawSeq.forEach((i, index) => {
                 ctx.drawImage(i, rageX[index], rageY[index], foodWeight[index], foodHeight[index]);
 
@@ -265,10 +264,15 @@
                 return;
             }
             console.log(drawSeq)
-
+            // const iitem = new Image();
+            // const uitem = iitem.myimgs[event.currentTarget.id]
+            const iitem = myimgs[event.currentTarget.id]
+            const iimg = [];
+            iimg.push(iitem.outerHTML)
+            console.log(iimg)
             str = `
                         <div class="foodModArea d-flex align-items-center justify-content-between flex-wrap w-100">
-                            <img src="${img}" class="man" alt="">
+                             ${iimg[0]}
                             <p class="me-2 mb-0">${pName}</p>
                             <span>價格:${pPrice}</span>
                             <i class="fa-solid fa-trash" id="btn1" onclick="delete_it(event)" data-pName="高麗菜" data-pPrice="30"></i>
