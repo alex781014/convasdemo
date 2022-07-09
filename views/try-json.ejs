@@ -1,0 +1,34 @@
+<%- include('parts/html-head.ejs') %>
+    <%- include('parts/html-navbar.ejs') %>
+
+        <div class="container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">AGE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let item of rows){ %>
+                        <tr>
+                            <td>
+                                <%= item.id%>
+                            </td>
+                            <td>
+                                <%= item.name%>
+                            </td>
+                            <td>
+                                <%= item.age%>
+                            </td>
+                        </tr>
+                        <%}%>
+                </tbody>
+            </table>
+        </div>
+        <%- include('parts/html-script.ejs') %>
+            <script>
+                const rows = <% -JSON.stringify(rows) %>
+            </script>
+            <%- include('parts/html-foot.ejs') %>

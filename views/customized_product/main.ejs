@@ -1,0 +1,273 @@
+<%- include('../parts/html-head.ejs') %>
+
+    <style>
+        .card {
+            width: 33%;
+        }
+
+        .card .card-img-top {
+            width: 100%;
+            height: 7vw;
+            object-fit: contain;
+            flex-grow: 1;
+        }
+
+        .man {
+            width: 80px;
+        }
+
+        .fa-trash {
+            cursor: pointer;
+        }
+
+        .chooseArea {
+            height: 40vh;
+        }
+    </style>
+    <%- include('../parts/html-navbar.ejs') %>
+
+        <div class="container">
+            <div class="pho-bg row">
+                <div class="col-3">
+
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="staple-food" data-bs-toggle="pill"
+                                data-bs-target="#pills-staple-food" type="button" role="tab"
+                                aria-controls="pills-staple-food" aria-selected="true">主食</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="meal" data-bs-toggle="pill" data-bs-target="#pills-meal"
+                                type="button" role="tab" aria-controls="pills-meal" aria-selected="false">肉類</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="seafood" data-bs-toggle="pill" data-bs-target="#pills-seafood"
+                                type="button" role="tab" aria-controls="pills-seafood" aria-selected="false">海鮮</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="vegetable" data-bs-toggle="pill"
+                                data-bs-target="#pills-vegetable" type="button" role="tab"
+                                aria-controls="pills-vegetable" aria-selected="false">青菜類</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-staple-food" role="tabpanel"
+                            aria-labelledby="pills-staple-food">
+                            <div class="d-flex flex-wrap">
+                                <% for(let i of rows){%>
+                                    <div class="card border-0 justify-content-center ">
+                                        <img class="man text-center card-img-top " src="../images/<%= i.product_img%>"
+                                            onclick="showcard(event)" id="btn1" alt=""
+                                            data-img="../images/<%= i.product_img%>" data-pName="<%= i.product_name%>"
+                                            data-pPrice="<%= i.product_price%>">
+                                        <div class="card-body">
+                                            <p class="card-text text-center m-0 pName">
+                                                <%= i.product_name%>
+                                            </p>
+                                            <p class="card-text text-center">
+                                                售價:<%= i.product_price%>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <%}%>
+
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="pills-meal" role="tabpanel" aria-labelledby="pills-meal">
+                            <div class="d-flex flex-wrap">
+                                <div class="card border-0">
+                                    <img src="../images/F-durian.png" onclick="showcard(event)" class="man man-1"
+                                        id="man_1" alt="" data-img="../images/F-durian.png">
+                                    <div class="card-body">
+
+                                        <p class="card-text">
+                                            價格:30
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="pills-seafood" role="tabpanel" aria-labelledby="pills-seafood">
+                            <div class="d-flex flex-wrap">
+                                <div class="card border-0">
+                                    <img src="../images/F-apple.jpg" onclick="showcard(event)" class="man man-2"
+                                        id="man_2" alt="" data-img="../images/F-apple.jpg">
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            價格:30
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="pills-vegetable" role="tabpanel"
+                            aria-labelledby="pills-vegetable">
+                            <div class="d-flex flex-wrap">
+                                <div class="card border-0">
+                                    <img src="../images/F-banana.jpg" onclick="showcard(event)" class="man man-3"
+                                        id="man_3" alt="" data-img="../images/F-banana.jpg">
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            價格:30
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card border-0">
+                                    <img src="../images/F-blueberry.jpg" onclick="showcard(event)" class=" man man-4"
+                                        id="man_4" alt="" data-img="../images/F-blueberry.jpg">
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            價格:30
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <img class="d-none" src="../images/images.jpg" id="bg1" alt="">
+                    <div class="photo"></div>
+                    <div class="cancasArea d-flex justify-content-center">
+                        <canvas id="myCanvas" width="500" height="500"></canvas>
+                    </div>
+
+
+                </div>
+                <div class="col-3">
+                    <h3 class="text-center">已選食材</h3>
+                    <div class="chooseArea d-flex  align-items-center ">
+                        <div class="detilArea d-flex align-items-center justify-content-between flex-wrap w-100">
+                            <!-- <div class="foodModArea">
+                                <img src="./images/F-durian.png" class="man" alt="">
+                                <p class="me-2 mb-0">榴槤</p>
+                                <span>價格:30</span>
+                                <i class="fa-solid fa-trash"></i>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="exampleFormControlSelect1">選擇便當數量</label>
+                        <select onchange="getcount()" class="form-control lunchbox_stock" id="exampleFormControlSelect1"
+                            name="lunchbox_stock" required>
+                            <option value="" selected disabled>-- 請選擇 --</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                        <label for="exampleFormControlTextarea1">備註欄</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                            name="custom_remark"></textarea>
+                        <div class="priceArea btn btn-success my-3 w-100">
+                            <p class="mb-0">總價:</p>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" style="display:block">送出</button>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <%- include('../parts/html-script.ejs') %>
+            <script>
+                let man_1 = document.querySelector("#man_1"), //榴槤
+                    man_2 = document.querySelector("#man_2"), //蘋果
+                    man_3 = document.querySelector("#man_3"), //香蕉
+                    man_4 = document.querySelector("#man_4"), //藍莓
+                    sen1 = document.querySelector("#sen1"),//這個暫時沒用
+                    btn1 = document.querySelector("#btn1"),//高麗菜
+                    canvasBg = document.getElementById("bg1");
+                let canvas = document.getElementById("myCanvas")
+                let ctx = canvas.getContext("2d");
+                const myimgs = { btn1, man_1, man_2, man_3, man_4 }
+                const drawSeq = [];
+                let iimg = [];
+                let iitem;
+                var newImg = new Image();
+                newImg.addEventListener("onload", drawbg());
+
+                function drawbg() {
+
+                    canvas.width = 500;
+                    canvas.height = 500;
+                    // 制作背景图
+                    let patBg = ctx.createPattern(canvasBg, "no-repeat");
+
+                    ctx.rect(0, 0, 660, 500);
+                    ctx.fillStyle = patBg;
+                    ctx.fill();
+                }
+                const rageX = [130, 100, 350, 300, 150]
+                const rageY = [130, 100, 100, 300, 300]
+                const foodWeight = [250, 100, 100, 100, 100]
+                const foodHeight = [250, 100, 100, 100, 100]
+
+                const foodModArea = document.querySelector(".foodModArea");
+                const detilArea = document.querySelector(".detilArea")
+                let str = "";
+                function showcard(event) {
+                    drawSeq.push(myimgs[event.currentTarget.id])
+                    drawSeq.forEach((i, index) => {
+                        ctx.drawImage(i, rageX[index], rageY[index], foodWeight[index], foodHeight[index]);
+
+                    })
+                    const man = event.currentTarget;
+                    const img = man.getAttribute("data-img");
+                    const pName = man.getAttribute("data-pName")
+                    const pPrice = man.getAttribute("data-pPrice")
+                    if (drawSeq.length + 1 > 6) {
+                        alert("食材只能選五樣唷~")
+                        return;
+                    }
+                    console.log(drawSeq)
+                    // const iitem = new Image();
+                    // const uitem = iitem.myimgs[event.currentTarget.id]
+                    iitem = myimgs[event.currentTarget.id]
+
+                    iimg.push(iitem.outerHTML)
+
+                    console.log(iimg)
+                    str = `
+                                    <div class="foodModArea d-flex align-items-center justify-content-between flex-wrap w-100">
+                                         ${iimg[0]}
+                                        <p class="me-2 mb-0">${pName}</p>
+                                        <span>價格:${pPrice}</span>
+                                        <i class="fa-solid fa-trash" id="btn1" onclick="delete_it(event)" data-pName="高麗菜" data-pPrice="30"></i>
+                                    </div>
+                                `
+                    detilArea.innerHTML += str;
+                }
+                function delete_it(event) {
+                    let currentProduct = iitem.outerHTML;
+                    console.log(currentProduct)
+                    const delprice = parseInt(event.target.getAttribute('data-pPrice'))
+                    iimg = iimg.filter(i => i !== currentProduct);
+
+                    // totalPrice = totalPrice.filter(i => i !== delprice)
+
+                    const de = event.target.closest(".foodModArea");
+                    de.remove();
+                    // final = final - delprice;
+
+                    // priceArea.innerHTML = `<p class="mb-0" >總價:${final}元</p>`
+                    // lunchboxStock.value = lunchboxStock.options[0].value;
+
+                }
+
+
+
+
+
+            </script>
+            <%- include('../parts/html-foot.ejs') %>

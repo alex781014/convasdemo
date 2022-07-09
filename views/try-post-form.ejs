@@ -1,0 +1,27 @@
+<%- include('parts/html-head.ejs') %>
+    <%- include('parts/html-navbar.ejs') %>
+        <div class="container">
+            <form method="post">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="text" name="email" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp">
+                    <div class="form-text">
+                        <%= typeof email !=='undefined' ?email:''%>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="text" name="password" class="form-control" id="exampleInputPassword1">
+                    <div class="form-text">
+                        <%= locals.password ?? '' %>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <pre><%- JSON.stringify(locals,null,4) %></pre>
+        </div>
+
+        <%- include('parts/html-script.ejs') %>
+            <%- include('parts/html-foot.ejs') %>

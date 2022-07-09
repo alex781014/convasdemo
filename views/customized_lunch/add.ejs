@@ -1,0 +1,140 @@
+<%- include('../parts/html-head') %>
+    <%- include('../parts/html-navbar') %>
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col">
+                    <h3>新增資料</h3>
+                    <form name="form1" onsubmit="sendForm(event)">
+                        <div class="mb-3">
+                            <label for="" class="form-label">lunch_1</label>
+                            <input type="text" class="form-control" name="lunch_1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">lunch_2</label>
+                            <input type="text" class="form-control" name="lunch_2">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">lunch_3</label>
+                            <input type="text" class="form-control" name="lunch_3">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">lunch_4</label>
+                            <input type="text" class="form-control" name="lunch_4">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">lunch_5</label>
+                            <input type="text" class="form-control" name="lunch_5">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">lunch_name</label>
+                            <input type="text" class="form-control" name="lunch_name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">total_price</label>
+                            <input type="text" class="form-control" name="total_price">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">lunchbox_stock</label>
+                            <input type="text" class="form-control" name="lunchbox_stock">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">total_calorie</label>
+                            <input type="text" class="form-control" name="total_calorie">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">custom_remark</label>
+                            <input type="text" class="form-control" name="custom_remark">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">reference_receipt_id</label>
+                            <input type="text" class="form-control" name="reference_receipt_id">
+                        </div>
+                        <button type="submit" class="btn btn-primary">sbumit</button>
+                        <div class="div"></div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <%- include('../parts/html-script') %>
+            <script>
+                const Joi = joi
+                const div = document.querySelector(".div")
+                function sendForm(event) {
+                    event.preventDefault();
+
+                    const fd = new FormData(document.form1);
+                    const dataObj = {};
+                    for (let i of fd.entries()) {  //entries() 方法會回傳一個包含陣列中每一個索引之鍵值對
+                        console.log(i);
+                        dataObj[i[0]] = i[1];
+                    }
+                    console.log(dataObj) //轉換成物件
+                    // < !--  < URLSearchParams 解析網址與處理網址中的參數-- >
+                    const usp = new URLSearchParams(fd);
+
+
+                    // 20220630 10:55 Joi前端講解檢查
+                    const schema = Joi.object({
+                        lunch_1: Joi.string()
+                            .min(1)
+                            .required()
+                            .messages({ 'string.empty': '必填' }), //注意empty 跟 require差別
+                        lunch_2: Joi.string()
+                            .min(1),
+                        lunch_3: Joi.string()
+                            .min(1),
+                        lunch_4: Joi.string()
+                            .min(1),
+                        lunch_5: Joi.string()  //Joi.any()任意格式
+                            .min(1),
+                        // 範例 自己再加上自己的資料表欄位
+                        // email{tlds:false} 
+                    });
+                    console.log(schema.validate(dataObj, { abortEarly: false }))
+
+                    // 用multipart-formdata
+
+                    fetch('', {
+                        method: 'POST',
+                        body: fd
+                    })
+                        .then(r => r.json())
+                        .then(obj => {
+                            console.log(obj)
+                            // div.innerHTML = JSON.stringify(obj)
+                        })
+
+                    //轉換urlencoded 
+                    // console.log(usp.toString())
+                    // fetch('', {
+                    //     method: 'POST',
+                    //     body: usp.toString()
+                    //     headers: 'Content-Type': 'application/x-www-form-urlencoded'
+                    // })
+                    //     .then(r => r.json())
+                    //     .then(obj => {
+                    //         console.log(obj)
+                    //     })
+
+                    //傳送json
+                    // fetch('', {
+                    //     method: 'POST',
+                    //     body: JSON.stringify(dataObj)
+                    //     headers: 'Content-Type': 'application/json'
+                    // })
+                    //     .then(r => r.json())
+                    //     .then(obj => {
+                    //         console.log(obj)
+                    //     })
+                    // for (let i of fd.entries()) {
+                    //     console.log(i)
+                    // }
+
+                }
+            </script>
+            <%- include('../parts/html-foot') %>

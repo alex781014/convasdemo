@@ -1,0 +1,75 @@
+<%- include('../parts/html-head.ejs') %>
+    <%- include('../parts/html-navbar.ejs') %>
+        <!--  <URLSearchParams 解析網址與處理網址中的參數 -->
+        <div class="container">
+
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <!-- 下面三個if 就是讓搜尋換頁也存在 如果有就會掛在queryString -->
+
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <% for(let i=page-5;i<=page+5;i++)if(i>=1 && i<=totalPages){ const obj={page:i};
+                                    if(query.search){ obj.search=query.search; };
+                                    if(query.beginDate){obj.beginDate=query.beginDate; }; if(query.endDate){
+                                    obj.endDate=query.endDate; }; const myLink=new URLSearchParams(obj).toString() %>
+                                    <li class="page-item" <%=page===i?'active':''%>>
+                                        <a class="page-link" href="?<%=myLink%>">
+                                            <%=i%>
+
+                                        </a>
+                                    </li>
+                                    <%}%>
+
+                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <table class="table table-striped table-border">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">lunch_1</th>
+                                <th scope="col">lunch_2</th>
+                                <th scope="col">lunch_3</th>
+                                <th scope="col">lunch_4</th>
+                                <th scope="col">lunch_5</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(let i of rows){%>
+                                <tr>
+                                    <td>
+                                        <%= i.sid%>
+                                    </td>
+                                    <td>
+                                        <%= i.lunch_1%>
+                                    </td>
+                                    <td>
+                                        <%= i.lunch_2%>
+                                    </td>
+                                    <td>
+                                        <%= i.lunch_3%>
+                                    </td>
+                                    <td>
+                                        <%= i.lunch_4%>
+                                    </td>
+                                    <td>
+                                        <%= i.lunch_5%>
+                                    </td>
+
+                                </tr>
+                                <%}%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <%- include('../parts/html-script.ejs') %>
+            <%- include('../parts/html-foot.ejs') %>
