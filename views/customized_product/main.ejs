@@ -60,7 +60,7 @@
                                         <img class="man text-center card-img-top " src="../images/<%= i.product_img%>"
                                             onclick="showcard(event)" id="<%= i.element_id%>" alt=""
                                             data-img="../images/<%= i.product_img%>" data-pName="<%= i.product_name%>"
-                                            data-pPrice="<%= i.product_price%>">
+                                            data-pPrice="<%= i.product_price%>" data-id="<%= i.element_id%>">
                                         <div class="card-body">
                                             <p class="card-text text-center m-0 pName">
                                                 <%= i.product_name%>
@@ -77,54 +77,65 @@
                         </div>
                         <div class="tab-pane fade" id="pills-meal" role="tabpanel" aria-labelledby="pills-meal">
                             <div class="d-flex flex-wrap">
-                                <div class="card border-0">
-                                    <img src="../images/F-durian.png" onclick="showcard(event)" class="man man-1"
-                                        id="man_1" alt="" data-img="../images/F-durian.png">
-                                    <div class="card-body">
-
-                                        <p class="card-text">
-                                            價格:30
-                                        </p>
+                                <% for(let i of rows){%>
+                                    <div class="card border-0 justify-content-center ">
+                                        <img class="man text-center card-img-top " src="../images/<%= i.product_img%>"
+                                            onclick="showcard(event)" id="<%= i.element_id%>" alt=""
+                                            data-img="../images/<%= i.product_img%>" data-pName="<%= i.product_name%>"
+                                            data-pPrice="<%= i.product_price%>">
+                                        <div class="card-body">
+                                            <p class="card-text text-center m-0 pName">
+                                                <%= i.product_name%>
+                                            </p>
+                                            <p class="card-text text-center">
+                                                售價:<%= i.product_price%>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                    <%}%>
                             </div>
 
                         </div>
                         <div class="tab-pane fade" id="pills-seafood" role="tabpanel" aria-labelledby="pills-seafood">
                             <div class="d-flex flex-wrap">
-                                <div class="card border-0">
-                                    <img src="../images/F-apple.jpg" onclick="showcard(event)" class="man man-2"
-                                        id="man_2" alt="" data-img="../images/F-apple.jpg">
-                                    <div class="card-body">
-                                        <p class="card-text">
-                                            價格:30
-                                        </p>
+                                <% for(let i of rows){%>
+                                    <div class="card border-0 justify-content-center ">
+                                        <img class="man text-center card-img-top " src="../images/<%= i.product_img%>"
+                                            onclick="showcard(event)" id="<%= i.element_id%>" alt=""
+                                            data-img="../images/<%= i.product_img%>" data-pName="<%= i.product_name%>"
+                                            data-pPrice="<%= i.product_price%>">
+                                        <div class="card-body">
+                                            <p class="card-text text-center m-0 pName">
+                                                <%= i.product_name%>
+                                            </p>
+                                            <p class="card-text text-center">
+                                                售價:<%= i.product_price%>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                    <%}%>
                             </div>
 
                         </div>
                         <div class="tab-pane fade" id="pills-vegetable" role="tabpanel"
                             aria-labelledby="pills-vegetable">
                             <div class="d-flex flex-wrap">
-                                <div class="card border-0">
-                                    <img src="../images/F-banana.jpg" onclick="showcard(event)" class="man man-3"
-                                        id="man_3" alt="" data-img="../images/F-banana.jpg">
-                                    <div class="card-body">
-                                        <p class="card-text">
-                                            價格:30
-                                        </p>
+                                <% for(let i of rows){%>
+                                    <div class="card border-0 justify-content-center ">
+                                        <img class="man text-center card-img-top " src="../images/<%= i.product_img%>"
+                                            onclick="showcard(event)" id="<%= i.element_id%>" alt=""
+                                            data-img="../images/<%= i.product_img%>" data-pName="<%= i.product_name%>"
+                                            data-pPrice="<%= i.product_price%>">
+                                        <div class="card-body">
+                                            <p class="card-text text-center m-0 pName">
+                                                <%= i.product_name%>
+                                            </p>
+                                            <p class="card-text text-center">
+                                                售價:<%= i.product_price%>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card border-0">
-                                    <img src="../images/F-blueberry.jpg" onclick="showcard(event)" class=" man man-4"
-                                        id="man_4" alt="" data-img="../images/F-blueberry.jpg">
-                                    <div class="card-body">
-                                        <p class="card-text">
-                                            價格:30
-                                        </p>
-                                    </div>
-                                </div>
+                                    <%}%>
                             </div>
                         </div>
                     </div>
@@ -181,6 +192,7 @@
 
         <%- include('../parts/html-script.ejs') %>
             <script>
+
                 let durian = document.querySelector("#durian"), //榴槤
                     apple = document.querySelector("#apple"), //蘋果
                     man_3 = document.querySelector("#man_3"), //香蕉
@@ -190,10 +202,7 @@
                     canvasBg = document.getElementById("bg1");
                 let canvas = document.getElementById("myCanvas")
                 let ctx = canvas.getContext("2d");
-                const myimgs = { btn1, durian, apple, man_3, man_4 }
-                const drawSeq = [];
-                let iimg = [];
-                let iitem;
+
                 var newImg = new Image();
                 newImg.addEventListener("onload", drawbg());
 
@@ -216,52 +225,53 @@
                 const foodModArea = document.querySelector(".foodModArea");
                 const detilArea = document.querySelector(".detilArea")
                 let str = "";
+                const myimgs = { btn1, durian, apple, man_3, man_4 }
+                const drawSeq = [];
+                let chooseImg;
+                let chooseImgs = [];
                 function showcard(event) {
                     drawSeq.push(myimgs[event.currentTarget.id])
                     drawSeq.forEach((i, index) => {
                         ctx.drawImage(i, rageX[index], rageY[index], foodWeight[index], foodHeight[index]);
-
                     })
                     const man = event.currentTarget;
                     const img = man.getAttribute("data-img");
                     const pName = man.getAttribute("data-pName")
                     const pPrice = man.getAttribute("data-pPrice")
+                    const pId = man.getAttribute("data-id")
                     if (drawSeq.length + 1 > 6) {
                         alert("食材只能選五樣唷~")
                         return;
                     }
                     console.log(drawSeq)
-                    // const iitem = new Image();
-                    // const uitem = iitem.myimgs[event.currentTarget.id]
-                    iitem = myimgs[event.currentTarget.id]
 
-                    iimg.push(iitem.outerHTML)
+                    chooseImg = myimgs[event.currentTarget.id].outerHTML
 
-                    console.log(iimg)
+
+                    for (let i = 0; i < chooseImgs.length; i++) {
+                        chooseImgs.push(chooseImg)
+                    }
+
+
+
                     str = `
                                     <div class="foodModArea d-flex align-items-center justify-content-between flex-wrap w-100">
-                                         ${iimg[0]}
+                                         ${chooseImgs[0]}
                                         <p class="me-2 mb-0">${pName}</p>
                                         <span>價格:${pPrice}</span>
-                                        <i class="fa-solid fa-trash" id="btn1" onclick="delete_it(event)" data-pName="高麗菜" data-pPrice="30"></i>
+                                        <i class="fa-solid fa-trash" id="${pId}" onclick="delete_it(event)" data-pName="${pName}" data-pPrice="${pPrice}"></i>
                                     </div>
                                 `
                     detilArea.innerHTML += str;
                 }
                 function delete_it(event) {
-                    let currentProduct = iitem.outerHTML;
+                    let currentProduct = chooseImg.outerHTML;
                     console.log(currentProduct)
                     const delprice = parseInt(event.target.getAttribute('data-pPrice'))
-                    iimg = iimg.filter(i => i !== currentProduct);
-
-                    // totalPrice = totalPrice.filter(i => i !== delprice)
+                    chooseImgs = chooseImgs.filter(i => i !== currentProduct);
 
                     const de = event.target.closest(".foodModArea");
                     de.remove();
-                    // final = final - delprice;
-
-                    // priceArea.innerHTML = `<p class="mb-0" >總價:${final}元</p>`
-                    // lunchboxStock.value = lunchboxStock.options[0].value;
 
                 }
 
