@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
         page: 1,
         totalRows: 0,
         totalPages: 0,
+        type: 0,
         rows: []
     }
     let page = +req.query.page || 1;
@@ -26,6 +27,9 @@ router.get('/', async (req, res) => {
         const [r2] = await db.query(sql02);
         output.rows = r2;
     }
+    // const sql03 = "SELECT * FROM customized_product"
+    // const [[{ type }]] = await db.query(sql03);
+    // output.type = type;
     output = { ...output, page, totalRows, totalPages }
     res.render('customized_product/main', output);
 })
