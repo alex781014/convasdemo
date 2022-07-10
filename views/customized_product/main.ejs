@@ -58,7 +58,7 @@
                                 <% for(let i of rows){%>
                                     <div class="card border-0 justify-content-center ">
                                         <img class="man text-center card-img-top " src="../images/<%= i.product_img%>"
-                                            onclick="showcard(event)" id="btn1" alt=""
+                                            onclick="showcard(event)" id="<%= i.element_id%>" alt=""
                                             data-img="../images/<%= i.product_img%>" data-pName="<%= i.product_name%>"
                                             data-pPrice="<%= i.product_price%>">
                                         <div class="card-body">
@@ -181,8 +181,8 @@
 
         <%- include('../parts/html-script.ejs') %>
             <script>
-                let man_1 = document.querySelector("#man_1"), //榴槤
-                    man_2 = document.querySelector("#man_2"), //蘋果
+                let durian = document.querySelector("#durian"), //榴槤
+                    apple = document.querySelector("#apple"), //蘋果
                     man_3 = document.querySelector("#man_3"), //香蕉
                     man_4 = document.querySelector("#man_4"), //藍莓
                     sen1 = document.querySelector("#sen1"),//這個暫時沒用
@@ -190,7 +190,7 @@
                     canvasBg = document.getElementById("bg1");
                 let canvas = document.getElementById("myCanvas")
                 let ctx = canvas.getContext("2d");
-                const myimgs = { btn1, man_1, man_2, man_3, man_4 }
+                const myimgs = { btn1, durian, apple, man_3, man_4 }
                 const drawSeq = [];
                 let iimg = [];
                 let iitem;
