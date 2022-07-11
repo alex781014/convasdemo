@@ -231,7 +231,7 @@
                 const detilArea = document.querySelector(".detilArea")
                 let str = "";
                 const myimgs = { btn1, durian, apple, lobster, beef }
-                let drawSeq = [];
+                let drawSeq = []; //canvas用
                 let chooseImg;
                 let chooseImgs = [];
 
@@ -252,34 +252,48 @@
                         return;
                     }
                     // 已選食材
-                    chooseImg = myimgs[event.currentTarget.id].outerHTML
+                    chooseImg = myimgs[event.target.id].getAttribute("data-pName")
+                    console.log(chooseImg)
                     chooseImgs.push(chooseImg)
+                    console.log(chooseImgs)
                     chooseImgs.forEach((i, index) => {
                         str = `
                                     <div class="foodModArea d-flex align-items-center justify-content-between flex-wrap w-100">
-                                         ${chooseImgs[index]}
+                                         <img class="man text-center card-img-top " src="../images/${img}" onclick="showcard(event)" id="${pId}" alt=""  data-pname="${pName}" data-pprice="${pPrice}">
                                         <p class="me-2 mb-0">${pName}</p>
                                         <span>價格:${pPrice}</span>
-                                        <i class="fa-solid fa-trash" id="${pId}" onclick="delete_it(event)" data-pName="${pName}" data-pPrice="${pPrice} ></i>
+                                        <i class="fa-solid fa-trash" id="${pId}" onclick="delete_it(event)" data-pName="${pName}" data-pPrice="${pPrice}"></i>
                                     </div>
                                 `
                     })
+                    // chooseImg = myimgs[event.currentTarget.id]
+                    // console.log(chooseImg)
+                    // chooseImgs.push(chooseImg)
+                    // chooseImgs.forEach((i, index) => {
+                    //     str = `
+                    //                 <div class="foodModArea d-flex align-items-center justify-content-between flex-wrap w-100">
+                    //                      ${chooseImgs[index]}
+                    //                     <p class="me-2 mb-0">${pName}</p>
+                    //                     <span>價格:${pPrice}</span>
+                    //                     <i class="fa-solid fa-trash" id="${pId}" onclick="delete_it(event)" data-pName="${pName}" data-pPrice="${pPrice}"></i>
+                    //                 </div>
+                    //             `
+                    // })
 
 
                     detilArea.innerHTML += str;
                     // console.log(event.currentTarget.id)
-                    console.log(myimgs[event.currentTarget.id])
-                    console.log(drawSeq)
+                    // console.log(myimgs[event.currentTarget.id])
+                    // console.log(drawSeq)
                 }
 
                 function delete_it(event) {
-                    let currentProduct = event.target
+                    let currentProduct = event.target.getAttribute("data-pName")
                     console.log(currentProduct)
                     // const delprice = parseInt(event.target.getAttribute('data-pPrice'))
                     chooseImgs = chooseImgs.filter(function (i) {
-                        return i !== myimgs[event.currentTarget.id]
+                        return i !== currentProduct
                     });
-                    console.log(chooseImgs)
                     const de = event.target.closest(".foodModArea");
                     de.remove();
 
