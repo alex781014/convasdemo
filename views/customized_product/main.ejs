@@ -185,6 +185,8 @@
                             <p class="mb-0">總價:</p>
                         </div>
                         <button type="submit" class="btn btn-primary w-100" style="display:block">送出</button>
+                        <select id="listCombo" onchange="loadCanvas(this.value)"></select>
+
                     </div>
 
 
@@ -210,6 +212,8 @@
                 // newImg = new Image();
                 window.onload = function () {
                     drawbg()
+                    saveCanvas()
+                    renewList();
                 };
 
                 function drawbg() {
@@ -228,6 +232,9 @@
                 const rageY = [130, 100, 100, 300, 300]
                 const foodWeight = [250, 100, 100, 100, 100]
                 const foodHeight = [250, 100, 100, 100, 100]
+                // -----------------列出所有符合項目---------
+                const listCombo = document.querySelector('#listCombo');
+
 
                 const foodModArea = document.querySelector(".foodModArea");
                 const detilArea = document.querySelector(".detilArea")
@@ -250,6 +257,8 @@
                     drawSeq.forEach((i, index) => {
                         ctx.drawImage(i, rageX[index], rageY[index], foodWeight[index], foodHeight[index]);
                     })
+                    saveCanvas();
+                    renewList();
                     const man = event.currentTarget;
                     const img = man.getAttribute("data-img");
                     const pName = man.getAttribute("data-pName")
@@ -273,6 +282,7 @@
                                 `
                     })
                     detilArea.innerHTML += str;
+
                     totalPrice.push(+pPrice)
                     console.log(totalPrice)
                     let sum = 0
@@ -281,13 +291,66 @@
                     }
                     pPrice = sum
                     priceArea.innerHTML = `<p class="mb-0" >總價:${pPrice}元</p>`
-                }
 
+                }
+                let drawItems;
+                // 列出所有符合的項目
+                const listSavedItems = () => {
+                    drawItems = []; // reset
+                    for (let i = 0; i < localStorage.length; i++) {
+                        let key = localStorage.key(i);
+                        console.log(key);
+                        let keyAr = key.split(';;');
+                        // console.log(keyAr)
+                        if (keyAr.length === 2 && keyAr[0] === 'shinder-draw') {
+                            drawItems.push({
+                                key: key,
+                                date: new Date(keyAr[1] * 1).toLocaleString()
+                            })
+                            console.log(drawItems)
+                        }
+                    }
+                    return drawItems;
+                };
+
+                //-------------------------------------------
+                // 存畫布------------------------------------------------
+                const saveCanvas = () => {
+                    const imgTxt = myCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                    let key = 'shinder-draw;;' + new Date().getTime();
+                    localStorage.setItem(key, imgTxt);
+                };
+                // 存畫布------------------------------------------------
+
+                // 更新已儲存的列表
+                const renewList = () => {
+                    let list = listSavedItems();
+                    listCombo.innerHTML = '<option value=""> -- 選擇載入的項目 -- </option>';
+                    for (let item of list) {
+                        listCombo.innerHTML += `<option value="${item.key}">${item.date}</option>`;
+                        // console.log(`key:${item.key}, date:${item.date}`)
+                    }
+                };
+                renewList();
+                //----------------------------------------------------------
+
+                //載入
+                const loadCanvas = (key) => {
+
+                    if (!key) return;
+                    const img = new Image();
+                    img.onload = () => {
+                        ctx.drawImage(img, 0, 0);
+                    };
+                    img.src = localStorage.getItem(key);
+                    console.log(img.src)
+                }
                 function delete_it(event) {
 
-                    ctx.clearRect(130, 130, 250, 250);
+                    ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
                     // ctx.globalCompositeOperation = "destination-over";
                     // drawbg()
+
 
                     let currentProduct = event.target.getAttribute("data-pName")
                     const delprice = parseInt(event.target.getAttribute('data-pPrice'))
@@ -302,6 +365,8 @@
                     lunchboxStock.value = lunchboxStock.options[0].value;
 
                 }
+
+
 
                 function getcount() {
                     d = lunchboxStock.value;
